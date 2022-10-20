@@ -35,9 +35,9 @@ def Register(request):
         email=data['email']
         password=data['password']
         confirm_password=data['confirm_password']
-        phone=data['phone']
+        phonez=data['phone']
 
-        if email=='' or first_name=='' or last_name ==''  or password=='' or confirm_password=='' or phone=='':
+        if email=='' or first_name=='' or last_name ==''  or password=='' or confirm_password=='' or phonez=='':
             message={'error':' fill the blanks','status':'false'}
             return Response(message,status=status.HTTP_400_BAD_REQUEST)
 
@@ -52,11 +52,11 @@ def Register(request):
             users.last_name=last_name
             users.email=email
             users.password=make_password(password)
-            users.phone=phone
+            users.phone=phonez
             users.save()
-            # send(phone)
-            # phone = data['phone']
-            # request.session['phone'] = phone
+            send(phonez)
+            phone = data['phone']
+            request.session['phone'] = phone
 
             serilaizer = AccountSerilaizer(users, many=False)
             return Response(serilaizer.data,status=status.HTTP_201_CREATED)
