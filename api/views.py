@@ -44,27 +44,26 @@ def Register(request):
         if password!=confirm_password:
             message={'error':'password missmatch','status':'false'}
             return Response(message,status=status.HTTP_400_BAD_REQUEST)    
+        
         else:
-            userpassword = password
 
+            users=Account()
+            users.first_name=first_name
+            users.last_name=last_name
+            users.email=email
+            users.password=make_password(password)
+            users.phone=phone
+            users.save()
+            # send(phone)
+            # phone = data['phone']
+            # request.session['phone'] = phone
 
-        users=Account()
-        users.first_name=first_name
-        users.last_name=last_name
-        users.email=email
-        users.password=make_password(userpassword)
-        users.phone=phone
-        users.save()
-        send(phone)
-        phone = data['phone']
-        request.session['phone'] = phone
-
-        serilaizer = AccountSerilaizer(users, many=False)
-        return Response(serilaizer.data,status=status.HTTP_200_OK)
+            serilaizer = AccountSerilaizer(users, many=False)
+            return Response(serilaizer.data,status=status.HTTP_201_CREATED)
 
 
     except:
-        message = {'detail': 'User with this email already exist','status':'false'}
+        message = {'detail': 'User with this email already existz','status':'false'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
