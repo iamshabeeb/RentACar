@@ -121,6 +121,7 @@ def display_order(request):
 @api_view(['POST'])
 def feedback(request,pk):
     data = request.data
+    print(data,'ddddddddddddddddddddddddddddddd')
     user = request.user
     order = Order.objects.get(pk = pk)
     print(order,'kkkkkkkkkk')
